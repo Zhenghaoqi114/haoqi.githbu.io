@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>润雪元旦快乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0a0a2a 0%, #1a1a4a 30%, #0c0c3d 70%, #05052a 100%);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        /* 星空背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        
+        /* 创建大量星星 */
+        .star:nth-child(1) { top: 10%; left: 20%; width: 2px; height: 2px; --duration: 3s; }
+        .star:nth-child(2) { top: 15%; left: 80%; width: 3px; height: 3px; --duration: 4s; }
+        .star:nth-child(3) { top: 20%; left: 40%; width: 1px; height: 1px; --duration: 2.5s; }
+        .star:nth-child(4) { top: 30%; left: 60%; width: 2px; height: 2px; --duration: 3.5s; }
+        .star:nth-child(5) { top: 40%; left: 10%; width: 3px; height: 3px; --duration: 5s; }
+        .star:nth-child(6) { top: 50%; left: 70%; width: 2px; height: 2px; --duration: 4.5s; }
+        .star:nth-child(7) { top: 60%; left: 30%; width: 1px; height: 1px; --duration: 3s; }
+        .star:nth-child(8) { top: 70%; left: 50%; width: 3px; height: 3px; --duration: 6s; }
+        .star:nth-child(9) { top: 80%; left: 90%; width: 2px; height: 2px; --duration: 4s; }
+        .star:nth-child(10) { top: 90%; left: 25%; width: 1px; height: 1px; --duration: 3.5s; }
+        .star:nth-child(11) { top: 5%; left: 55%; width: 2px; height: 2px; --duration: 5.5s; }
+        .star:nth-child(12) { top: 35%; left: 85%; width: 3px; height: 3px; --duration: 4.5s; }
+        .star:nth-child(13) { top: 65%; left: 15%; width: 1px; height: 1px; --duration: 3s; }
+        .star:nth-child(14) { top: 25%; left: 95%; width: 2px; height: 2px; --duration: 6s; }
+        .star:nth-child(15) { top: 85%; left: 65%; width: 3px; height: 3px; --duration: 4s; }
+        
+        /* 大星星 */
+        .big-star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: big-twinkle 8s infinite ease-in-out;
+        }
+        
+        .big-star:nth-child(16) { top: 15%; left: 35%; width: 4px; height: 4px; }
+        .big-star:nth-child(17) { top: 75%; left: 75%; width: 5px; height: 5px; }
+        .big-star:nth-child(18) { top: 25%; left: 65%; width: 4px; height: 4px; }
+        .big-star:nth-child(19) { top: 85%; left: 25%; width: 5px; height: 5px; }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes big-twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* 月亮 */
+        .moon {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #f9f3c6, #f0e68c);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(249, 243, 198, 0.5);
+            animation: moon-float 15s infinite ease-in-out;
+        }
+        
+        .moon-crater {
+            position: absolute;
+            background-color: rgba(210, 195, 120, 0.5);
+            border-radius: 50%;
+        }
+        
+        .moon-crater:nth-child(1) { top: 20%; left: 30%; width: 15px; height: 15px; }
+        .moon-crater:nth-child(2) { top: 40%; left: 50%; width: 10px; height: 10px; }
+        .moon-crater:nth-child(3) { top: 60%; left: 25%; width: 12px; height: 12px; }
+        .moon-crater:nth-child(4) { top: 30%; left: 65%; width: 8px; height: 8px; }
+        
+        @keyframes moon-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* 烟花容器 */
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .firework {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        /* 不同位置的烟花 */
+        .firework-1 {
+            top: 30%;
+            left: 20%;
+            animation: launch-firework-1 6s infinite;
+        }
+        
+        .firework-2 {
+            top: 40%;
+            left: 70%;
+            animation: launch-firework-2 8s infinite 2s;
+        }
+        
+        .firework-3 {
+            top: 60%;
+            left: 40%;
+            animation: launch-firework-3 7s infinite 4s;
+        }
+        
+        .firework-4 {
+            top: 20%;
+            left: 50%;
+            animation: launch-firework-4 9s infinite 1s;
+        }
+        
+        .firework-5 {
+            top: 70%;
+            left: 80%;
+            animation: launch-firework-5 6.5s infinite 3s;
+        }
+        
+        /* 烟花粒子 */
+        .particle {
+            position: absolute;
+            width: 6px; /* 增大粒子大小 */
+            height: 6px;
+            border-radius: 50%;
+            opacity: 1; /* 修复：初始opacity应为1 */
+            box-shadow: 0 0 10px currentColor;
+        }
+        
+        /* 按钮烟花粒子 */
+        .button-particle {
+            position: absolute;
+            width: 8px; /* 增大按钮粒子大小 */
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 0 15px currentColor;
+            opacity: 1; /* 修复：初始opacity应为1 */
+        }
+        
+        /* 烟花动画 */
+        @keyframes launch-firework-1 {
+            0% { opacity: 0; transform: translateY(100vh); }
+            10% { opacity: 1; }
+            20% { transform: translateY(30%); }
+            21% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes launch-firework-2 {
+            0% { opacity: 0; transform: translateY(100vh); }
+            10% { opacity: 1; }
+            20% { transform: translateY(40%); }
+            21% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes launch-firework-3 {
+            0% { opacity: 0; transform: translateY(100vh); }
+            10% { opacity: 1; }
+            20% { transform: translateY(60%); }
+            21% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes launch-firework-4 {
+            0% { opacity: 0; transform: translateY(100vh); }
+            10% { opacity: 1; }
+            20% { transform: translateY(20%); }
+            21% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes launch-firework-5 {
+            0% { opacity: 0; transform: translateY(100vh); }
+            10% { opacity: 1; }
+            20% { transform: translateY(70%); }
+            21% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        /* 爆炸效果 - 修复关键问题 */
+        .explosion {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 1; /* 修复：爆炸容器应该可见 */
+        }
+        
+        .explosion .particle {
+            animation: explode 1s ease-out forwards;
+        }
+        
+        .button-explosion {
+            position: absolute;
+            opacity: 1; /* 修复：爆炸容器应该可见 */
+        }
+        
+        /* 修复爆炸动画 - 关键修复 */
+        @keyframes explode {
+            0% { 
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+        
+        /* 按钮烟花爆炸动画 */
+        @keyframes button-explode {
+            0% { 
+                opacity: 1;
+                transform: translate(0, 0) scale(0.5);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(var(--tx), var(--ty)) scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+        
+        /* 灯笼样式 */
+        :root {
+            --lineColor: #ecaa2f;
+            --bg: #f00;
+        }
+        
+        .container {
+            width: 200px;
+            height: 150px;
+            position: relative;
+            animation: rotate 3s infinite ease-in-out;
+            z-index: 10;
+            filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.7));
+        }
+        
+        .center {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            border-radius: 120px;
+            box-shadow: 
+                0 0 80px -10px var(--bg),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+            animation: rotate 3s infinite ease-in-out;
+            transform-origin: top center;
+        }
+        
+        .center::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: calc(50% - 40px);
+            width: 80px;
+            height: 10px;
+            background: var(--lineColor);
+            border-radius: 5px 5px 0 0;
+            z-index: 2;
+        }
+        
+        .center::after {
+            content: "";
+            width: 80px;
+            height: 10px;
+            background: var(--lineColor);
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            bottom: -8px;
+            left: calc(50% - 40px);
+            z-index: 2;
+        }
+        
+        .center-line {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 灯笼文字容器 */
+        .lantern-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+        }
+        
+        /* 灯笼文字样式 */
+        .lantern-text span {
+            font-size: 20px;
+            color: #FFD700;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            letter-spacing: 2px;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+        
+        /* 泡沫效果 */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0;
+            transform: scale(0);
+            animation: bubble-pop 1s ease-out forwards;
+        }
+        
+        @keyframes bubble-pop {
+            0% {
+                opacity: 0.8;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3);
+            }
+        }
+        
+        /* 字体切换动画 */
+        .text-change {
+            animation: text-change 2s ease-in-out forwards;
+        }
+        
+        @keyframes text-change {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            30% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            70% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        .center-line::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(50% - 75px);
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--lineColor);
+            border-radius: 50%;
+        }
+        
+        .center-line::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(50% - 35px);
+            width: 70px;
+            height: 150px;
+            border: 2px solid var(--lineColor);
+            border-radius: 50%;
+        }
+        
+        .head-line {
+            position: absolute;
+            left: calc(50% - 2px);
+            top: -60px;
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(to top, var(--lineColor), #ff9900);
+        }
+        
+        .footer-line {
+            position: absolute;
+            left: calc(50% - 2px);
+            bottom: -50px;
+            width: 4px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--lineColor), #ff9900);
+            animation: rotate 3s infinite ease-in-out;
+        }
+        
+        .footer-line::after {
+            content: "";
+            position: absolute;
+            bottom: -75px;
+            left: calc(50% - 8px);
+            width: 16px;
+            height: 80px;
+            background: linear-gradient(
+                #f00,
+                #e36d00 3px,
+                #FFD700 5px,
+                #e36d00 8px,
+                #e36d00 12px,
+                #f00 16px,
+                rgba(255, 0, 0, 0.8) 26px,
+                rgba(255, 0, 0, 0.6)
+            );
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        @keyframes rotate {
+            0%,
+            100% {
+                transform: rotate(-10deg);
+            }
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+        
+        /* 灯笼光晕效果 */
+        .lantern-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 50, 0, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 5;
+            pointer-events: none;
+            animation: glow-pulse 4s infinite ease-in-out;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        /* 节日标题 */
+        .festival-title {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFD700;
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            letter-spacing: 10px;
+            animation: title-glow 3s infinite alternate;
+            z-index: 10;
+            white-space: nowrap;
+        }
+        
+        @keyframes title-glow {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            100% { text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 100, 0, 0.8); }
+        }
+        
+        /* 控制面板 */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 101;
+        }
+        
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .control-btn:hover::before {
+            left: 100%;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .control-btn:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.4);
+        }
+        
+        #changeText {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+        
+        #resetText {
+            background: linear-gradient(45deg, #FF9A9E, #FAD0C4);
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+        }
+        
+        /* 音效提示 */
+        .sound-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 14px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        /* 按钮烟花容器 */
+        .button-fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+    <div class="festival-title">元旦快乐</div>
+    
+    <!-- 星空背景 -->
+    <div class="stars">
+        <!-- 小星星 -->
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        
+        <!-- 大星星 -->
+        <div class="big-star"></div>
+        <div class="big-star"></div>
+        <div class="big-star"></div>
+        <div class="big-star"></div>
+    </div>
+    
+    <!-- 月亮 -->
+    <div class="moon">
+        <div class="moon-crater"></div>
+        <div class="moon-crater"></div>
+        <div class="moon-crater"></div>
+        <div class="moon-crater"></div>
+    </div>
+    
+    <!-- 烟花背景 -->
+    <div class="fireworks">
+        <div class="firework firework-1"></div>
+        <div class="firework firework-2"></div>
+        <div class="firework firework-3"></div>
+        <div class="firework firework-4"></div>
+        <div class="firework firework-5"></div>
+    </div>
+    
+    <!-- 按钮烟花容器 -->
+    <div class="button-fireworks"></div>
+    
+    <!-- 灯笼光晕 -->
+    <div class="lantern-glow"></div>
+    
+    <!-- 灯笼主体 -->
+    <div class="container">
+        <span class="head-line"></span>
+        <div class="center">
+            <div class="center-line">
+                <div class="lantern-text">
+                    <span id="lantern-text">元旦快乐</span>
+                </div>
+            </div>
+            <span class="footer-line"></span>
+        </div>
+    </div>
+    
+    <!-- 音效提示 -->
+    <div class="sound-indicator"> 🔊</div>
+    
+    <!-- 控制面板 -->
+    <div class="controls">
+        <button class="control-btn" id="changeText">快乐+1</button>
+        <button class="control-btn" id="resetText">快乐+2</button>
+    </div>
+
+    <script>
+        // 创建更多星星
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 20; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = Math.random() > 0.8 ? 'big-star' : 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.animationDuration = `${Math.random() * 5 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 创建烟花爆炸效果 - 修复版本
+        function createFireworkExplosion(firework) {
+            const colors = [
+                '#ff0000', '#00ff00', '#0000ff', '#ffff00', 
+                '#ff00ff', '#00ffff', '#ff9900', '#ff66cc',
+                '#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2'
+            ];
+            
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = firework.style.left;
+            explosion.style.top = firework.style.top;
+            
+            // 创建爆炸粒子
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.backgroundColor = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                particle.style.setProperty('--tx', `${(Math.random() - 0.5) * 150}px`);
+                particle.style.setProperty('--ty', `${(Math.random() - 0.5) * 150}px`);
+                particle.style.animationDelay = `${Math.random() * 0.2}s`;
+                explosion.appendChild(particle);
+            }
+            
+            document.querySelector('.fireworks').appendChild(explosion);
+            
+            // 移除爆炸效果
+            setTimeout(() => {
+                if (explosion.parentNode) {
+                    explosion.parentNode.removeChild(explosion);
+                }
+            }, 1000);
+        }
+        
+        // 为每个烟花添加爆炸效果
+        const fireworks = document.querySelectorAll('.firework');
+        fireworks.forEach(firework => {
+            // 监听动画迭代完成
+            firework.addEventListener('animationiteration', () => {
+                createFireworkExplosion(firework);
+            });
+            
+            // 立即触发一次，确保烟花立即显示
+            setTimeout(() => {
+                createFireworkExplosion(firework);
+            }, 100);
+        });
+        
+        // 初始化
+        createStars();
+        
+        // 随机改变灯笼颜色
+        function changeLanternColor() {
+            const colors = [
+                { line: '#ecaa2f', bg: '#f00' }, // 红金
+                { line: '#4cd137', bg: '#0097e6' }, // 蓝绿
+                { line: '#fbc531', bg: '#8c7ae6' }, // 紫黄
+                { line: '#00cec9', bg: '#d63031' }, // 红青
+                { line: '#fd79a8', bg: '#0984e3' }  // 粉蓝
+            ];
+            
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.documentElement.style.setProperty('--lineColor', randomColor.line);
+            document.documentElement.style.setProperty('--bg', randomColor.bg);
+            
+            // 随机时间后再次改变颜色
+            setTimeout(changeLanternColor, Math.random() * 5000 + 3000);
+        }
+        
+        // 开始随机改变颜色
+        setTimeout(changeLanternColor, 3000);
+        
+        // 添加鼠标交互效果
+        document.addEventListener('mousemove', (e) => {
+            const lantern = document.querySelector('.container');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            lantern.style.transform = `rotate(${x}deg) translateY(${y}px)`;
+        });
+        
+        // 添加点击烟花效果
+        document.addEventListener('click', (e) => {
+            createFireworkExplosionAtPosition(e.clientX, e.clientY);
+        });
+        
+        // 字体切换功能
+        const lanternTextElement = document.getElementById('lantern-text');
+        const changeTextBtn = document.getElementById('changeText');
+        const resetTextBtn = document.getElementById('resetText');
+        
+        // 初始文字
+        let currentText = "元旦快乐";
+        let isSpecialText = false;
+        
+        // 创建泡沫效果
+        function createBubbles() {
+            const lanternText = document.querySelector('.lantern-text');
+            
+            // 创建多个泡沫
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                // 随机位置
+                const x = Math.random() * 100 - 50;
+                const y = Math.random() * 100 - 50;
+                const size = Math.random() * 20 + 10;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `calc(50% + ${x}px)`;
+                bubble.style.top = `calc(50% + ${y}px)`;
+                bubble.style.background = `radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,215,0,0.2) 100%)`;
+                
+                // 随机动画延迟
+                bubble.style.animationDelay = `${Math.random() * 0.5}s`;
+                
+                lanternText.appendChild(bubble);
+                
+                // 动画结束后移除泡沫
+                setTimeout(() => {
+                    if (bubble.parentNode) {
+                        bubble.parentNode.removeChild(bubble);
+                    }
+                }, 1000);
+            }
+        }
+        
+        // 创建烟花音效（使用Web Audio API）
+        function createFireworkSound(type = 'small') {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                // 根据类型设置不同的音效
+                if (type === 'big') {
+                    oscillator.frequency.setValueAtTime(180, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(40, audioContext.currentTime + 0.6);
+                    
+                    gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.0);
+                    
+                    oscillator.type = 'sawtooth';
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 1.0);
+                } else {
+                    oscillator.frequency.setValueAtTime(320, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.4);
+                    
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
+                    
+                    oscillator.type = 'square';
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.6);
+                }
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+            } catch (error) {
+                console.log('音频上下文不支持或用户未交互');
+            }
+        }
+        
+        // 创建按钮烟花效果
+        function createButtonFirework(button, type = 'small') {
+            const buttonRect = button.getBoundingClientRect();
+            const centerX = buttonRect.left + buttonRect.width / 2;
+            const centerY = buttonRect.top + buttonRect.height / 2;
+            
+            const colors = type === 'big' ? 
+                ['#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2', '#EF476F', '#FFD166'] :
+                ['#FF9A9E', '#FAD0C4', '#A1C4FD', '#C2E9FB', '#FFD1FF', '#FFAFCC', '#CDB4DB'];
+            
+            // 播放烟花音效
+            createFireworkSound(type);
+            
+            // 创建多个爆炸效果
+            for (let j = 0; j < 4; j++) {
+                setTimeout(() => {
+                    const explosion = document.createElement('div');
+                    explosion.className = 'button-explosion';
+                    explosion.style.left = `${centerX}px`;
+                    explosion.style.top = `${centerY}px`;
+                    
+                    // 创建爆炸粒子
+                    const particleCount = type === 'big' ? 60 : 35;
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'button-particle';
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.backgroundColor = color;
+                        particle.style.boxShadow = `0 0 15px ${color}`;
+                        
+                        // 设置粒子初始位置
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = type === 'big' ? Math.random() * 200 + 80 : Math.random() * 150 + 50;
+                        const tx = Math.cos(angle) * distance;
+                        const ty = Math.sin(angle) * distance;
+                        
+                        particle.style.setProperty('--tx', `${tx}px`);
+                        particle.style.setProperty('--ty', `${ty}px`);
+                        
+                        // 随机大小
+                        const size = type === 'big' ? Math.random() * 10 + 5 : Math.random() * 8 + 4;
+                        particle.style.width = `${size}px`;
+                        particle.style.height = `${size}px`;
+                        
+                        // 应用动画
+                        particle.style.animation = `button-explode 1s ease-out ${Math.random() * 0.4}s forwards`;
+                        
+                        explosion.appendChild(particle);
+                    }
+                    
+                    document.querySelector('.button-fireworks').appendChild(explosion);
+                    
+                    // 移除爆炸效果
+                    setTimeout(() => {
+                        if (explosion.parentNode) {
+                            explosion.parentNode.removeChild(explosion);
+                        }
+                    }, 1200);
+                    
+                }, j * 150); // 每个爆炸之间间隔150ms
+            }
+            
+            // 创建额外的屏幕烟花
+            if (type === 'big') {
+                setTimeout(() => {
+                    // 在屏幕不同位置创建额外的烟花
+                    for (let i = 0; i < 5; i++) {
+                        const x = Math.random() * window.innerWidth;
+                        const y = Math.random() * window.innerHeight;
+                        
+                        createFireworkExplosionAtPosition(x, y);
+                    }
+                }, 400);
+            }
+        }
+        
+        // 在指定位置创建烟花爆炸
+        function createFireworkExplosionAtPosition(x, y) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = `${x}px`;
+            explosion.style.top = `${y}px`;
+            
+            const colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#ff00ff', '#ff9900', '#FF6B6B', '#4ECDC4'];
+            
+            for (let i = 0; i < 45; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.backgroundColor = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                particle.style.setProperty('--tx', `${(Math.random() - 0.5) * 120}px`);
+                particle.style.setProperty('--ty', `${(Math.random() - 0.5) * 120}px`);
+                particle.style.animationDelay = `${Math.random() * 0.3}s`;
+                explosion.appendChild(particle);
+            }
+            
+            document.querySelector('.fireworks').appendChild(explosion);
+            
+            // 播放音效
+            createFireworkSound('big');
+            
+            setTimeout(() => {
+                if (explosion.parentNode) {
+                    explosion.parentNode.removeChild(explosion);
+                }
+            }, 1000);
+        }
+        
+        // 切换文字函数 - 快乐+1
+        function changeText() {
+            if (!isSpecialText) {
+                // 切换到特殊文字
+                currentText = "沈润雪";
+                lanternTextElement.textContent = currentText;
+                lanternTextElement.style.fontSize = "22px";
+                lanternTextElement.style.letterSpacing = "8px";
+                isSpecialText = true;
+                
+                // 添加泡沫效果
+                createBubbles();
+                
+                // 添加按钮烟花效果（小烟花）
+                createButtonFirework(changeTextBtn, 'small');
+                
+                // 添加文字切换动画
+                lanternTextElement.classList.add('text-change');
+                setTimeout(() => {
+                    lanternTextElement.classList.remove('text-change');
+                }, 2000);
+            } else {
+                // 添加元旦快乐
+                currentText = "沈润雪元旦快乐";
+                lanternTextElement.textContent = currentText;
+                lanternTextElement.style.fontSize = "18px";
+                lanternTextElement.style.letterSpacing = "4px";
+                
+                // 添加泡沫效果
+                createBubbles();
+                
+                // 添加按钮烟花效果（小烟花）
+                createButtonFirework(changeTextBtn, 'small');
+                
+                // 添加文字切换动画
+                lanternTextElement.classList.add('text-change');
+                setTimeout(() => {
+                    lanternTextElement.classList.remove('text-change');
+                }, 2000);
+            }
+        }
+        
+        // 重置文字函数 - 快乐+2
+        function resetText() {
+            currentText = "元旦快乐";
+            lanternTextElement.textContent = currentText;
+            lanternTextElement.style.fontSize = "20px";
+            lanternTextElement.style.letterSpacing = "2px";
+            isSpecialText = false;
+            
+            // 添加泡沫效果
+            createBubbles();
+            
+            // 添加按钮烟花效果（大烟花）
+            createButtonFirework(resetTextBtn, 'big');
+            
+            // 添加文字切换动画
+            lanternTextElement.classList.add('text-change');
+            setTimeout(() => {
+                lanternTextElement.classList.remove('text-change');
+            }, 2000);
+        }
+        
+        // 按钮事件监听
+        changeTextBtn.addEventListener('click', changeText);
+        resetTextBtn.addEventListener('click', resetText);
+        
+        // 两秒后自动切换到"沈润雪"
+        setTimeout(() => {
+            changeText();
+        }, 2000);
+        
+        // 再过两秒后自动切换到"沈润雪元旦快乐"
+        setTimeout(() => {
+            if (isSpecialText) {
+                changeText();
+            }
+        }, 4000);
+        
+        // 添加音频上下文启动（需要用户交互）
+        document.addEventListener('click', function initAudio() {
+            if (window.audioContextInitialized) return;
+            
+            try {
+                // 尝试创建音频上下文
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    new AudioContext();
+                    window.audioContextInitialized = true;
+                    
+                    // 更新提示
+                    const soundIndicator = document.querySelector('.sound-indicator');
+                    soundIndicator.textContent = ' 🔊';
+                    soundIndicator.style.color = '#4ECDC4';
+                    
+                    setTimeout(() => {
+                        soundIndicator.style.opacity = '0.5';
+                    }, 2000);
+                }
+            } catch (e) {
+                console.log('音频初始化失败');
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
